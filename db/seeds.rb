@@ -7,3 +7,25 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+require "json"
+require "open-uri"
+
+puts "Cleaning database..."
+Movie.destroy_all
+
+puts "Fetching movies from API..."
+
+url = "https://tmdb.lewagon.com/movie/top_rated"
+response = URI.open(url).read
+movies = JSON.parse(response)["results"]
+
+movies.each do |movie_data|
+  Movie.create!(
+    title: movie_data["title"],
+    overview: movie_data["overview"],
+    poster_url: "https://image.tmdb.org/t/p/original#{movie_data["poster_path"]}",
+    rating: movie_data["vote_average"]
+  )
+end
+
+puts "Seeding complete!"
