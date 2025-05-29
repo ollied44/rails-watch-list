@@ -1,12 +1,30 @@
-<h1><%= @list.name %></h1>
+<div class="hero text-white text-center mb-5" style="background-image: url('https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; height: 500px; display: flex; align-items: center; justify-content: center;">
+  <h1 class="display-4 fw-bold text-white text-shadow"><%= @list.name %></h1>
+</div>
 
-<ul>
-  <% @list.bookmarks.each do |bookmark| %>
-    <li>
-      <%= bookmark.movie.title %> - <%= bookmark.comment %>
-      <%= link_to "Delete", bookmark_path(bookmark), method: :delete, data: { turbo: false, confirm: "Are you sure?" }, class: "btn btn-outline-danger btn-sm" %>
-    </li>
-  <% end %>
-</ul>
+<div class="container text-center">
+  <div class="row justify-content-center">
+    <% @list.bookmarks.each do |bookmark| %>
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm position-relative h-100">
+          <% if bookmark.movie.poster_url.present? %>
+              <%= image_tag bookmark.movie.poster_url, class: "card-img-top w-100", alt: bookmark.movie.title, style: "height: 350px; object-fit: cover; object-position: top;" %>
+            <% else %>
+              <%= image_tag "https://via.placeholder.com/400x350?text=No+Image", class: "card-img-top w-100", style: "height: 350px; object-fit: cover; object-position: top;" %>
+          <% end %>
 
-<%= link_to "Add a new bookmark", new_list_bookmark_path(@list), class: "btn btn-primary mt-3" %>
+          <div class="card-body text-start">
+            <h5 class="card-title fw-bold"><%= bookmark.movie.title %></h5>
+            <p class="card-text"><%= bookmark.comment %></p>
+          </div>
+
+          <%= link_to bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "position-absolute bottom-0 end-0 m-2 text-danger fs-4" do %>
+            <i class="bi bi-trash"></i>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%= link_to "Add a new movie", new_list_bookmark_path(@list), class: "btn btn-primary mt-4 w-50" %>
+</div>

@@ -1,8 +1,14 @@
-<h1>New List</h1>
-<%= form_with model: @list, local: true do |form| %>
-  <div class="mb-3">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "form-control" %>
-  </div>
-  <%= form.submit "Create List", class: "btn btn-primary" %>
-<% end %>
+<div class="hero text-white text-center mb-5" style="background-image: url('https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; height: 500px; display: flex; align-items: center; justify-content: center;">
+  <h1 class="display-4 fw-bold text-white text-shadow">Create a New List</h1>
+</div>
+
+<div class="container mt-5" style="max-width: 600px;">
+  <%= form_with model: @list, local: true do |form| %>
+    <div class="mb-3">
+      <%= form.label :name, class: "form-label fw-bold" %>
+      <%= form.text_field :name, class: "form-control", placeholder: "e.g. Classic Movies" %>
+    </div>
+
+    <%= form.submit "Create List", class: "btn btn-primary mt-3 w-100" %>
+  <% end %>
+</div>
